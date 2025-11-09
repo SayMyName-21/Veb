@@ -38,7 +38,7 @@
     <form action="/bookReservation" method="POST">
         <h2>Choose a book:</h2>
         <div th:each="book : ${books}">
-            <input type="radio" name="bookSelection" th:id="'book-' + ${book.title}" th:value="${book.title}">
+            <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
             <label th:for="'book-' + ${book.title}"
                    th:text="'Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
         </div>

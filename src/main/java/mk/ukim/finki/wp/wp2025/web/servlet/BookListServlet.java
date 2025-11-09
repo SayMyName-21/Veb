@@ -48,11 +48,13 @@ public class BookListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String bookTitle = req.getParameter("bookSelection");
-        String readerName = req.getParameter("readerName");
-        String readerAddress = req.getParameter("readerAddress");
-        Integer copies = Integer.valueOf(req.getParameter("numCopies"));
-
-        resp.sendRedirect(this.getServletContext().getContextPath() + "/");
+        IWebExchange webExchange = JakartaServletWebApplication
+                .buildApplication(req.getServletContext())
+                .buildExchange(req, resp);
+        req.getSession().setAttribute("bookTitle", req.getParameter("bookTitle"));
+        req.getSession().setAttribute("readerName", req.getParameter("readerName"));
+        req.getSession().setAttribute("readerAddress", req.getParameter("readerAddress"));
+        req.getSession().setAttribute("numCopies", req.getParameter("numCopies"));
+        resp.sendRedirect("/bookReservation");
     }
 }
