@@ -20,7 +20,6 @@ import java.io.IOException;
 
 
 @WebServlet(name = "BookReservationServlet", urlPatterns = "/bookReservation")
-@Component
 public class BookReservationServlet extends HttpServlet {
     private final BookReservationService bookReservationService;
     private final SpringTemplateEngine templateEngine;

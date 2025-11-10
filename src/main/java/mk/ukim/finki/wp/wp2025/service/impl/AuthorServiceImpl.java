@@ -10,6 +10,10 @@ import java.util.List;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private AuthorRepository authorRepository;
+    public AuthorServiceImpl(AuthorRepository authorRepository)
+    {
+        this.authorRepository = authorRepository;
+    }
 
     @Override
     public List<Author> findAll() {

@@ -12,7 +12,7 @@ import java.util.List;
 public class InMemoryBookRepository implements BookRepository {
     @Override
     public void delete(Long Id){
-        DataHolder.books.stream().filter(b -> b.getId() != Id);
+        DataHolder.books = DataHolder.books.stream().filter(b -> b.getId() != Id).toList();
     }
     @Override
     public void edit(Long Id, Book book) {

@@ -35,19 +35,18 @@
     <h1>Welcome to our Book Reservation App</h1>
 </header>
 <main>
-    <form action="/bookReservation" method="POST">
         <h2>Choose a book:</h2>
-            <div th:each="book : ${books}">
-                <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
-                <label th:for="'book-' + ${book.title}"
-                       th:text="'Author: '+ ${book.author.name} + ' ' + ${book.author.surname} + ' Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
-                <form th:action="@{'/'${book.id}}" method="get">
-                    <button type="submit">Edit</button>
-                </form>
-                <form th:action="@{'/books/delete/' + ${book.id}}" method="post">
-                    <button type="submit">Delete</button>
-                </form>
-            </div>
+        <div th:each="book : ${books}">
+            <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
+            <label th:for="'book-' + ${book.title}"
+                   th:text="'Author: '+ ${book.author.name} + ' ' + ${book.author.surname} + ' bookID: ' + ${book.getId()} + ' Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
+            <form th:action="@{'/books/book-form/{id}' (id=${book.getId()})}" method="get">
+                <button type="submit">Edit</button>
+            </form>
+            <form th:action="@{'/books/delete/{id}'(id=${book.getId()})}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
         </div>
         <h2>Enter your information:</h2>
         <label>Your Name:</label>
@@ -58,8 +57,9 @@
         <h2>Choose number of copies:</h2>
         <input type="number" name="numCopies" min="1" max="10" required><br/>
         <br/>
-        <input type="submit" value="Reserve Book">
-    </form>
+        <form method="post" th:action="@{/reservationConfirmation}">
+            <input type="submit" value="Reserve Book">
+        </form>
 </main>
 </body>
 </html>

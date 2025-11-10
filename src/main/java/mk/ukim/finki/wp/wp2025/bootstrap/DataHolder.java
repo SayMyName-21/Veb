@@ -19,7 +19,7 @@ public class DataHolder {
     public void init() {
         authors = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            authors.add(new Author(String.valueOf(i), String.valueOf(i), String.valueOf(i)));
+            authors.add(new Author(String.valueOf(i), String.valueOf(i), String.valueOf(i), String.valueOf(i)));
         }
         books = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

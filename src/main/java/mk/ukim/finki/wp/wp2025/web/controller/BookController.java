@@ -36,8 +36,7 @@ public class BookController {
 
     @GetMapping("/book-form/{id}")
     public String getEditBookForm(@PathVariable Long id, Model model){
-        List<Book> books = bookService.listAll();
-        model.addAttribute("books", books);
+        model.addAttribute("authors", authorService.findAll());
         return "book-form";
     }
 
@@ -61,7 +60,7 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @PostMapping("/{bookId}")
+    @PostMapping("/edit/{bookId}")
     public String editBook(@PathVariable Long bookId,
                            @RequestParam String title,
                            @RequestParam String genre,
@@ -73,11 +72,7 @@ public class BookController {
     }
 
     @PostMapping("/delete/{bookId}")
-    public String deleteBook(@PathVariable Long bookId,
-                           @RequestParam String title,
-                           @RequestParam String genre,
-                           @RequestParam Double averageRating,
-                           @RequestParam Long authorId) {
+    public String deleteBook(@PathVariable Long bookId) {
         bookService.deleteBook(bookId);
         return "redirect:/books";
     }
