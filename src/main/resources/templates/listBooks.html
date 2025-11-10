@@ -37,12 +37,18 @@
 <main>
     <form action="/bookReservation" method="POST">
         <h2>Choose a book:</h2>
-        <div th:each="book : ${books}">
-            <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
-            <label th:for="'book-' + ${book.title}"
-                   th:text="'Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
+            <div th:each="book : ${books}">
+                <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
+                <label th:for="'book-' + ${book.title}"
+                       th:text="'Author: '+ ${book.author.name} + ' ' + ${book.author.surname} + ' Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
+                <form th:action="@{'/'${book.id}}" method="get">
+                    <button type="submit">Edit</button>
+                </form>
+                <form th:action="@{'/books/delete/' + ${book.id}}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
         </div>
-
         <h2>Enter your information:</h2>
         <label>Your Name:</label>
         <input type="text" name="readerName" required><br/>
