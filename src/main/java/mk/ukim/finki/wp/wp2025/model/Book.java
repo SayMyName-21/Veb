@@ -13,10 +13,10 @@ public class Book {
     private Double averageRating;
 
     public Book(String title, String genre, Double averageRating, Author author) {
-        this.id = (long) (Math.random() * 1000);
         this.title = title;
         this.genre = genre;
         this.averageRating = averageRating;
         this.author = author;
     }
+
 }

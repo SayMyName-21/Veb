@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/books")
@@ -35,44 +36,45 @@ public class BookController {
     }
 
     @GetMapping("/book-form/{id}")
-    public String getEditBookForm(@PathVariable Long id, Model model){
+    public String getEditBookForm(@PathVariable Long id, Model model) {
         model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("selectedBook", bookService.findBookById(id));
         return "book-form";
     }
 
     @GetMapping("/book-form")
-    public String getAddBookPage(Model model)
-    {
-        List<Book> books = bookService.listAll();
-        model.addAttribute("books", books);
+    public String getAddBookPage(Model model) {
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("books", bookService.listAll());
         return "book-form";
     }
 
 
     @PostMapping("/add")
     public String saveBook(Model model,
-                           @RequestParam String title,
+                           @RequestParam String bookTitle,
                            @RequestParam String genre,
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
-        Author author = authorService.findAll().stream().filter(a -> a.getId() == authorId).findFirst().orElse(null);
-        bookService.addBook(new Book(title, genre, averageRating, author));
+        Author author = authorService.findAll().stream().filter(a -> Objects.equals(a.getId(), authorId)).findFirst().orElse(null);
+        bookService.addBook(new Book(bookTitle, genre, averageRating, author));
         return "redirect:/books";
     }
 
     @PostMapping("/edit/{bookId}")
     public String editBook(@PathVariable Long bookId,
-                           @RequestParam String title,
+                           @RequestParam String bookTitle,
                            @RequestParam String genre,
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
-        Author author = authorService.findAll().stream().filter(a -> a.getId() == authorId).findFirst().orElse(null);
-        bookService.editBook(bookId, new Book(title, genre, averageRating, author));
+        Author author = authorService.findAll().stream().filter(a -> Objects.equals(a.getId(), authorId)).findFirst().orElse(null);
+        bookService.editBook(bookId, new Book(bookTitle, genre, averageRating, author));
         return "redirect:/books";
     }
 
     @PostMapping("/delete/{bookId}")
-    public String deleteBook(@PathVariable Long bookId) {
+    public String deleteBook(Model model,
+                             @PathVariable Long bookId) {
         bookService.deleteBook(bookId);
         return "redirect:/books";
     }

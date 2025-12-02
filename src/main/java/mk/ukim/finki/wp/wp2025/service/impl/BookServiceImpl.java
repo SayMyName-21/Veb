@@ -37,4 +37,9 @@ public class BookServiceImpl implements BookService {
     public List<Book> searchBooks(String text, Double rating) {
         return this.bookRepository.searchBooks(text, rating);
     }
+
+    @Override
+    public Book findBookById(long id) {
+        return bookRepository.findById(id);
+    }
 }

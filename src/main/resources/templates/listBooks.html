@@ -35,31 +35,33 @@
     <h1>Welcome to our Book Reservation App</h1>
 </header>
 <main>
-        <h2>Choose a book:</h2>
-        <div th:each="book : ${books}">
-            <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
-            <label th:for="'book-' + ${book.title}"
-                   th:text="'Author: '+ ${book.author.name} + ' ' + ${book.author.surname} + ' bookID: ' + ${book.getId()} + ' Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
-            <form th:action="@{'/books/book-form/{id}' (id=${book.getId()})}" method="get">
-                <button type="submit">Edit</button>
-            </form>
-            <form th:action="@{'/books/delete/{id}'(id=${book.getId()})}" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-        </div>
-        <h2>Enter your information:</h2>
-        <label>Your Name:</label>
-        <input type="text" name="readerName" required><br/>
-        <label>Your Address:</label>
-        <input type="text" name="readerAddress" required><br/>
-
-        <h2>Choose number of copies:</h2>
-        <input type="number" name="numCopies" min="1" max="10" required><br/>
-        <br/>
-        <form method="post" th:action="@{/reservationConfirmation}">
-            <input type="submit" value="Reserve Book">
+    <h2>Choose a book:</h2>
+    <div th:each="book : ${books}">
+        <input type="radio" name="bookTitle" th:id="'book-' + ${book.title}" th:value="${book.title}">
+        <label th:for="'book-' + ${book.title}"
+               th:text="'Author: '+ ${book.author.name} + ' ' + ${book.author.surname} + ' bookID: ' + ${book.getId()} + ' Title: ' + ${book.title} + ' Genre: ' + ${book.genre} + ' Rating: ' + ${book.averageRating}"></label>
+        <form th:action="@{'/books/book-form/{id}' (id=${book.getId()})}" method="get">
+            <button type="submit">Edit</button>
         </form>
+        <form th:action="@{'/books/delete/{id}'(id=${book.getId()})}" method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+    <form th:action="@{'/books/book-form'}">
+        <button type="submit">Add Book</button>
+    </form>
+    <h2>Enter your information:</h2>
+    <label>Your Name:</label>
+    <input type="text" name="readerName" required><br/>
+    <label>Your Address:</label>
+    <input type="text" name="readerAddress" required><br/>
+
+    <h2>Choose number of copies:</h2>
+    <input type="number" name="numCopies" min="1" max="10" required><br/>
+    <br/>
+    <form method="post" th:action="@{/reservationConfirmation}">
+        <input type="submit" value="Reserve Book">
+    </form>
 </main>
 </body>
 </html>

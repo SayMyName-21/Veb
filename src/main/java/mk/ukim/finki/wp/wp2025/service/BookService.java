@@ -10,4 +10,5 @@ public interface BookService {
     void addBook(Book book);
     List<Book> listAll();
     List<Book> searchBooks(String text, Double rating);
+    Book findBookById(long id);
 }

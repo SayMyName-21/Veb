@@ -5,11 +5,27 @@
     <title>Title</title>
 </head>
 <body>
-<input type="text" name="bookTitle" required><br/>
-<input type="text" name="genre" required><br/>
-<input type="text" name="averageRating" required><br/>
-<select th:each="author : ${authors}">
-    <option th:value="${author.getId()}" th:text="${author.getName()}"></option>
-</select>
+<div th:if="${selectedBook == null}">
+    <form th:action="@{'/books/add'}" method="POST">
+        <input type="text" name="bookTitle" required><br/>
+        <input type="text" name="genre" required><br/>
+        <input type="text" name="averageRating" required><br/>
+        <select name="authorId">
+            <option th:each="author : ${authors}" th:value="${author.getId()}" th:text="${author.getName()}"></option>
+        </select>
+        <button type="submit">Add</button>
+    </form>
+</div>
+<div th:if="${selectedBook != null}">
+    <form th:action="@{'/books/edit/{id}'(id=${selectedBook.getId()})}" method="POST">
+        <input th:value="${selectedBook.title}" type="text" name="bookTitle" required><br/>
+        <input th:value="${selectedBook.genre}" type="text" name="genre" required><br/>
+        <input th:value="${selectedBook.averageRating}" type="text" name="averageRating" required><br/>
+        <select name="authorId">
+            <option th:each="author : ${authors}" th:value="${author.getId()}" th:text="${author.getName()}"></option>
+        </select>
+        <button type="submit">Edit</button>
+    </form>
+</div>
 </body>
 </html>

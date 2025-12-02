@@ -9,8 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Component
 public class DataHolder {
+    public static Long nextBookId = 1L;
     public static List<Book> books = null;
     public static List<BookReservation> bookReservations = null;
     public static List<Author> authors = null;
@@ -23,7 +26,9 @@ public class DataHolder {
         }
         books = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            books.add(new Book(String.valueOf(i), String.valueOf(i), (double) i, authors.get(i%3)));
+            Book book = new Book("title "+ i, "genre " + i, (double) i, authors.get(i%3));
+            book.setId(nextBookId++);
+            books.add(book);
         }
         bookReservations = new ArrayList<>();
     }
