@@ -28,7 +28,6 @@ public class BookController {
             model.addAttribute("error", error);
         }
         List<Book> books = bookService.listAll();
-        ;
         List<Author> authors = authorService.findAll();
         model.addAttribute("books", books);
         model.addAttribute("authors", authors);
@@ -56,8 +55,7 @@ public class BookController {
                            @RequestParam String genre,
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
-        Author author = authorService.findAll().stream().filter(a -> Objects.equals(a.getId(), authorId)).findFirst().orElse(null);
-        bookService.addBook(new Book(bookTitle, genre, averageRating, author));
+        bookService.addBook(new Book(bookTitle, genre, averageRating, authorService.findAuthorById(authorId)));
         return "redirect:/books";
     }
 
@@ -67,8 +65,7 @@ public class BookController {
                            @RequestParam String genre,
                            @RequestParam Double averageRating,
                            @RequestParam Long authorId) {
-        Author author = authorService.findAll().stream().filter(a -> Objects.equals(a.getId(), authorId)).findFirst().orElse(null);
-        bookService.editBook(bookId, new Book(bookTitle, genre, averageRating, author));
+        bookService.editBook(bookId, new Book(bookTitle, genre, averageRating, authorService.findAuthorById(authorId)));
         return "redirect:/books";
     }
 
